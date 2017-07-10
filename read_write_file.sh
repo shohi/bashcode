@@ -49,7 +49,6 @@ declare -a items=("rounds" "concurrency" "iterations" "detailMetrics")
 
 # 2. rewrite config file
 function put_config_item() {
-    filepath=$2
     for item in "${items[@]}"
     do
         if [[ $1 == *"<${item}>"* ]]; then
