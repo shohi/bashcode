@@ -1,2 +1,2 @@
-# bashcode
-Bash Codebase
+# shell-suki
+frequently used shell comands
