@@ -4,15 +4,14 @@
 # refer-1, https://gist.github.com/leogaggl/46d17ec9f91158a24ab8b05ef5e6bfb4
 # refer-2, https://gist.github.com/joemiller/2dd72670e37769cb647c
 
-# optional change working_dir
-# TODO: create workding dir if not exits
+# TODO
+# 1. create workding dir if not exits
+# 2. add FILTER args
+# 3. use search api instead
 
+# optional change working_dir
 working_dir=${1-$(pwd)}
 cd $working_dir
-
-user="github_username"
-token="application token"
-organization="Organization_Name"
 
 if [ -z "$TOKEN" ]; then
   echo "no TOKEN= environment var specified"
@@ -25,8 +24,12 @@ if [ -z "$ORG" ]; then
 fi
 
 echo "==> Cloning all repos from '$ORG'"
+# user="github_username"
 # https://api.github.com/orgs/$organization/repos?type=private\&per_page=100 -u ${user}:${token}
-repo_list=$curl -u "$TOKEN:x-oauth-basic" -s https://api.github.com/orgs/$ORG/repos\?per_page\=500 | jq .[].ssh_url | sed -e 's/^"//'  -e 's/"$//')
+query="https://api.github.com/orgs/$ORG/repos?per_page=500&type=private"
+
+# NOTE: need pagination
+repo_list=$(curl -u "$TOKEN:x-oauth-basic" -s "$query" | jq --arg v "$TEST" '.[] | select(.name | test($v)) | .ssh_url' | sed -e 's/^"//'  -e 's/"$//')
 
 for repo in $repo_list
 do
