@@ -28,7 +28,7 @@ do
     elif [[ ${flag} = "-bi=" ]]; then
         iteration=${val}
     elif [[ ${flag} = "-bm=" ]]; then
-        detailMetrics=$val}
+        detailMetrics=${val}
     else
         otherParams="${otherParams} $param"
     fi
@@ -49,8 +49,7 @@ declare -a items=("rounds" "concurrency" "iterations" "detailMetrics")
 
 # 2. rewrite config file
 function put_config_item() {
-    for item in "${items[@]}"
-    do
+    for item in "${items[@]}" ; do
         if [[ $1 == *"<${item}>"* ]]; then
             eval "local temp=\$${item}"       
             echo "<${item}>${temp}</${item}>" >> $2
@@ -62,8 +61,7 @@ function put_config_item() {
     echo $1 >> $2
 }
 
-while IFS= read -r line || [ -n "$line" ]
-do 
+while IFS= read -r line || [ -n "$line" ]; do 
     if [ -z "$line" ]; then
         echo $line >> ${new_config_path}
     else
