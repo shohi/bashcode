@@ -1,2 +1,7 @@
-# 
+# test data
 **/data
+
+# tmp file
+tmp/
+tmp.*
+
