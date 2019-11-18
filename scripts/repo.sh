@@ -1,8 +1,12 @@
 #!/usr/bin/env bash -x
 #
+# Utilities for git repos manipulations.
+#
+
+#
 # Generate `update.sh` for repos under given folder.
 # The content is like:
-# "(cd /<sub-dir> && git pull)" 
+# "(cd /<sub-dir> && git pull)"
 
 # TODO: refactor
 # print out error messages along with time information and arguments
@@ -21,7 +25,7 @@ function gen_repo_update_sh() {
   if (( $# < 1 )); then
     err "please specify root dir."
     return
-  fi 
+  fi
 
   local abspath=$(realpath $1)
   if [[ ! -d ${abspath} ]]; then
