@@ -11,3 +11,13 @@ function mkdir_today() {
 function mkdir_today_short() {
   mkdir -p $(date '+%y-%m-%d')
 }
+
+# cd to foler whose name is current day, e.g `2019-11-11`.
+function cd_today() {
+  local td="$(date '+%Y-%m-%d')"
+  if [[ -d  "${td}" ]]; then
+    cd "$td"
+  else
+    echo "no directory found - ${td}"
+  fi
+}
