@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash -x
 
 # 0. check work directory
 WORK_DIR=`pwd`

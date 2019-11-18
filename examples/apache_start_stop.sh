@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash -x
 
 # shutdown apache2 http server
 sudo service lightdm start

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash -x
 
 # requires jq -> http://stedolan.github.io/jq/
 # refer-1, https://gist.github.com/leogaggl/46d17ec9f91158a24ab8b05ef5e6bfb4
