@@ -1,9 +1,9 @@
 #!/usr/bin/env bash -x
-#
-# Utilities for git repos manipulations.
-#
 
-#
+#######################################################################
+#                 Utilities for git repo manipulation                 #
+#######################################################################
+
 # Generate `update.sh` for repos under given folder.
 # The content is like:
 # "(cd /<sub-dir> && git pull)"

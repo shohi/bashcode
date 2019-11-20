@@ -15,3 +15,14 @@ HEREDOC
 
   echo ${data}
 }
+
+function test_heredoc_escape() {
+  local value="val"
+  local data=$(cat <<HEREDOC
+hello \"${value}\"
+HEREDOC
+  )
+  echo ${data}
+}
+
+test_heredoc_escape
