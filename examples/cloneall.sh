@@ -29,10 +29,9 @@ echo "==> Cloning all repos from '$ORG'"
 query="https://api.github.com/orgs/$ORG/repos?per_page=500&type=private"
 
 # NOTE: need pagination
-repo_list=$(curl -u "$TOKEN:x-oauth-basic" -s "$query" | jq --arg v "$TEST" '.[] | select(.name | test($v)) | .ssh_url' | sed -e 's/^"//'  -e 's/"$//')
+repo_list=$(curl -u "$TOKEN:x-oauth-basic" -s "$query" | jq --arg v "$TEST" '.[] | select(.name | test($v)) | .ssh_url' | sed -e 's/^"//' -e 's/"$//')
 
-for repo in $repo_list
-do
+for repo in $repo_list; do
 
   echo "Repo found: $repo"
   git clone $repo

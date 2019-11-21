@@ -1,5 +1,5 @@
 #!/usr/bin/env bash -x
-# 
+#
 # utility functions
 
 # print out error messages along with time information and arguments

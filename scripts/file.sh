@@ -8,7 +8,7 @@ function err() {
 
 # https://stackoverflow.com/questions/7427262/how-to-read-a-file-into-a-variable-in-shell
 function read_file() {
-  if (( $# < 1 )); then
+  if (($# < 1)); then
     err "please specify file path."
     return 1
   fi
@@ -27,7 +27,7 @@ function read_file() {
 # refer-1, https://stackoverflow.com/questions/602706/batch-renaming-files-with-bash/602770#602770
 # refer-2, https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
 function batch_rename() {
-  if (( $# < 2 )); then
+  if (($# < 2)); then
     err "please specify file and replace patterns"
     return 1
   fi
@@ -38,7 +38,7 @@ function batch_rename() {
   # replacement
   local rpt=$2
 
-  for i in $(find . -type f -name "*${fileptn}*") ; do
+  for i in $(find . -type f -name "*${fileptn}*"); do
     mv "$i" "${i/$fileptn/${rpt}}"
   done
 

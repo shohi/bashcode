@@ -22,7 +22,7 @@ function no_op() {
 
 # create update.sh under given folder which is first argument
 function gen_repo_update_sh() {
-  if (( $# < 1 )); then
+  if (($# < 1)); then
     err "please specify root dir."
     return
   fi
@@ -41,16 +41,16 @@ function gen_repo_update_sh() {
 
   touch "${update_sh}"
 
-  echo "#!/bin/bash\n" >> "${update_sh}"
+  echo "#!/bin/bash\n" >>"${update_sh}"
 
-  for file in "${abspath}"/* ; do
+  for file in "${abspath}"/*; do
     if [[ -d "${file}" ]]; then
       local escaped_fp=$(printf '%q' "${file}")
       local file_basename=$(basename "${file}")
 
-      echo "echo \"update => ${file_basename}\"" >> "${update_sh}"
-      echo "( cd ${escaped_fp} && git pull --all )\n" >> "${update_sh}"
-      echo "echo \"\"" >> "${update_sh}"
+      echo "echo \"update => ${file_basename}\"" >>"${update_sh}"
+      echo "( cd ${escaped_fp} && git pull --all )\n" >>"${update_sh}"
+      echo "echo \"\"" >>"${update_sh}"
     fi
   done
 

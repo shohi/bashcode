@@ -5,7 +5,8 @@
 #######################################################################
 
 function test_heredoc() {
-  local data=$(cat <<HEREDOC
+  local data=$(
+    cat <<HEREDOC
 {
   "k1": "v1",
   "k2": "v2"
@@ -18,7 +19,8 @@ HEREDOC
 
 function test_heredoc_escape() {
   local value="val"
-  local data=$(cat <<HEREDOC
+  local data=$(
+    cat <<HEREDOC
 hello \"${value}\"
 HEREDOC
   )
