@@ -8,7 +8,7 @@
 # scripts can't be found and loaded.
 
 function main() {
-  local scripts=("file.sh" "dir.sh" "repo.sh")
+  local scripts=("file.sh" "dir.sh" "repo.sh" "image.sh")
   for s in "${scripts[@]}"; do
     if [[ -f "scripts/$s" ]]; then
       source "scripts/$s"
