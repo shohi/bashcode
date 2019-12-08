@@ -105,6 +105,7 @@ function minikube_provision() {
   local images=$(
     cat <<HEREDOC
     gcr.io/k8s-minikube/storage-provisioner:v1.8.1
+    k8s.gcr.io/kube-addon-manager:v9.0.2
     k8s.gcr.io/coredns:1.6.2
     k8s.gcr.io/kube-addon-manager:v9.0
     k8s.gcr.io/kube-controller-manager:v1.16.2
