@@ -8,7 +8,8 @@
 # scripts can't be found and loaded.
 
 function main() {
-  local scripts=("file.sh" "dir.sh" "repo.sh" "image.sh")
+  # TODO: refactor, use glob to process all scripts under `scripts` folder.
+  local scripts=("file.sh" "dir.sh" "repo.sh" "image.sh" "datetime.sh")
   for s in "${scripts[@]}"; do
     if [[ -f "scripts/$s" ]]; then
       source "scripts/$s"
