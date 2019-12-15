@@ -32,6 +32,12 @@ function week_of_day() {
 
   local wk=$(date -j -f '%Y-%m-%d' "${dt}" +'%V')
 
+  # same week with `YYYY-01-01`
+  if [ "${wk}" -eq "${fdw}" ]; then
+    echo "01"
+    return
+  fi
+
   if [ "${fdw}" -ne 1 ]; then
     echo "$((wk + 1))"
   else
