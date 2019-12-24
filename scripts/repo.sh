@@ -22,6 +22,22 @@ function no_op() {
 
 # create update.sh under given folder which is first argument
 function gen_repo_update_sh() {
+  local forced="false"
+
+  # parse `-f` option
+  while getopts ":f" opt; do
+    case ${opt} in
+      f)
+        forced="true"
+        ;;
+      \?)
+        # if an invalid option is provided, set forced to false
+        forced="false"
+        ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+
   if (($# < 1)); then
     err "please specify root dir."
     return
@@ -34,12 +50,13 @@ function gen_repo_update_sh() {
   fi
 
   local update_sh="${abspath}/update.sh"
-  if [[ -f "$update_sh" ]]; then
+  if [[ -f "$update_sh" ]] && [ "false" = "${forced}" ]; then
     err "update.sh already exists."
     return
   fi
 
-  touch "${update_sh}"
+  # truncate existing one or create a new one if not exist.
+  : >"${update_sh}"
 
   echo "#!/bin/bash\n" >>"${update_sh}"
 
