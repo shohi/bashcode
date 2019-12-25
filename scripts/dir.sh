@@ -25,5 +25,41 @@ function cd_today() {
 # TODO: fix resolve relative path
 # https://unix.stackexchange.com/questions/24293/converting-relative-path-to-absolute-path-without-symbolic-link
 function abs_path() {
-  (cd "$(dirname '$1')" &>/dev/null && printf "%s/%s" "$PWD" "${1##*/}")
+  if (($# < 1)); then
+    echo "please specify path"
+    return 1
+  fi
+
+  local p=$1
+
+  case "$p" in
+    / | /*)
+      printf "%s" "$p"
+      return
+      ;;
+
+    . | ./* | .. | ../*)
+      # split
+      # NOTE: zsh not support ('a b c') to array
+      # arr=(${p//\// })
+      arr=($(echo -e "${p//\//\n}" | awk '{print $1}'))
+      # echo "arr => ${arr[@]} ${#arr[@]}"
+
+      local tdir=$PWD
+      if [ ".." = "${arr[@]:0:1}" ]; then
+        tdir=$(cd .. &>/dev/null && printf "%s" "$PWD")
+      fi
+      local sarr=(${arr[@]:1})
+      local tstr="${sarr[*]}"
+      local jstr="${tstr// //}"
+
+      printf "%s/%s" "${tdir}" "${jstr}"
+      return
+      ;;
+
+    *)
+      printf "%s" "$p"
+      return 1
+      ;;
+  esac
 }
