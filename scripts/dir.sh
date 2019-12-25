@@ -21,3 +21,9 @@ function cd_today() {
     echo "no directory found - ${td}"
   fi
 }
+
+# TODO: fix resolve relative path
+# https://unix.stackexchange.com/questions/24293/converting-relative-path-to-absolute-path-without-symbolic-link
+function abs_path() {
+  (cd "$(dirname '$1')" &>/dev/null && printf "%s/%s" "$PWD" "${1##*/}")
+}
