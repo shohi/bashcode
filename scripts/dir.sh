@@ -22,7 +22,34 @@ function cd_today() {
   fi
 }
 
-# TODO: fix resolve relative path
+# handle multiple levels relative path, e.g. "../../a/b/c"
+# NOTE: only consecutive relatives are allowed,
+# paht like "../bc/../de" can't be resolved.
+function _resolve_multiple_relative() {
+  local p=$1
+
+  # split
+  # NOTE: zsh not support ('a b c') to array
+  # arr=(${p//\// })
+  # arr=($(echo -e "${p//\//\n}" | awk '{print $1}'))
+  local arr=($(echo -e "${p//\//\n}"))
+  local tdir=${arr[@]:0:1}
+  local tpwd=$PWD
+  while [ ".." = "${arr[@]:0:1}" ]; do
+    tpwd=$(cd "${tpwd}" && cd .. &>/dev/null && printf "%s" "$PWD")
+
+    # remove first element
+    arr=(${arr[@]:1})
+    # echo "arr=> ${arr[@]}, ${#arr[@]}, ${arr[@]:0:1}"
+  done
+
+  local tstr="${arr[*]}"
+  local jstr="${tstr// //}"
+
+  printf "%s/%s" "${tpwd}" "${jstr}"
+}
+
+# convert given path to abs path
 # https://unix.stackexchange.com/questions/24293/converting-relative-path-to-absolute-path-without-symbolic-link
 function abs_path() {
   if (($# < 1)); then
@@ -35,26 +62,12 @@ function abs_path() {
   case "$p" in
     / | /*)
       printf "%s" "$p"
-      return
       ;;
-
-    . | ./* | .. | ../*)
-      # split
-      # NOTE: zsh not support ('a b c') to array
-      # arr=(${p//\// })
-      arr=($(echo -e "${p//\//\n}" | awk '{print $1}'))
-      # echo "arr => ${arr[@]} ${#arr[@]}"
-
-      local tdir=$PWD
-      if [ ".." = "${arr[@]:0:1}" ]; then
-        tdir=$(cd .. &>/dev/null && printf "%s" "$PWD")
-      fi
-      local sarr=(${arr[@]:1})
-      local tstr="${sarr[*]}"
-      local jstr="${tstr// //}"
-
-      printf "%s/%s" "${tdir}" "${jstr}"
-      return
+    . | ./*)
+      printf "%s" "${p/\./$PWD}"
+      ;;
+    .. | ../*)
+      _resolve_multiple_relative "$p"
       ;;
 
     *)
