@@ -90,13 +90,13 @@ function check_repo() {
     return
   fi
 
-  local _msg
+  local msg
   local filename
   for file in "${abspath}"/*; do
     if [[ -d "${file}" ]]; then
       filename=$(basename "${file}")
       pushd "${file}" >/dev/null
-      _msg=$(git status --porcelain 2>/dev/null)
+      msg=$(git status --porcelain 2>/dev/null)
       if [ $? -ne 0 ]; then
         echo "directory - [${file}] - not git repo"
         popd >/dev/null
