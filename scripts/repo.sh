@@ -13,6 +13,7 @@
 # refer, https://google.github.io/styleguide/shell.xml
 function err() {
   echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >&2
+  exit 1
 }
 
 # https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Bourne-Shell-Builtins
@@ -72,4 +73,40 @@ function gen_repo_update_sh() {
   done
 
   chmod +x "${update_sh}"
+}
+
+# check if repos have changes under given folder which is first argument
+# refer-1, https://stackoverflow.com/questions/5143795/how-can-i-check-in-a-bash-script-if-my-local-git-repository-has-changes
+# refer-2, https://stackoverflow.com/questions/25288194/dont-display-pushd-popd-stack-across-several-bash-scripts-quiet-pushd-popd
+function check_repo() {
+  if (($# < 1)); then
+    err "please specify root dir."
+    return
+  fi
+
+  local abspath=$(realpath $1)
+  if [[ ! -d ${abspath} ]]; then
+    err "given path - ${abspath} - is not a dir."
+    return
+  fi
+
+  local _msg
+  local filename
+  for file in "${abspath}"/*; do
+    if [[ -d "${file}" ]]; then
+      filename=$(basename "${file}")
+      pushd "${file}" >/dev/null
+      _msg=$(git status --porcelain 2>/dev/null)
+      if [ $? -ne 0 ]; then
+        echo "directory - [${file}] - not git repo"
+        popd >/dev/null
+        continue
+      fi
+
+      if [[ "${msg}" ]]; then
+        echo "repo changes => ${filename}"
+      fi
+      popd >/dev/null
+    fi
+  done
 }
