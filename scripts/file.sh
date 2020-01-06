@@ -43,3 +43,9 @@ function batch_rename() {
   done
 
 }
+
+# Get current directory's basename
+# https://stackoverflow.com/questions/1371261/get-current-directory-name-without-full-path-in-a-bash-script
+function bspwd() {
+  echo "$(basename $PWD)"
+}
