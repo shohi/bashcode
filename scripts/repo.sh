@@ -110,3 +110,16 @@ function check_repo() {
     fi
   done
 }
+
+# prune local branches which don't exist on remote anymore
+# refer, https://stackoverflow.com/questions/13064613/how-to-prune-local-tracking-branches-that-do-not-exist-on-remote-anymore
+function repo_branch_prune() {
+  # NOTE: support PWD is a git repo
+  git fetch -p
+
+  if [ $? -ne 0 ]; then
+    exit 1
+  fi
+
+  git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -D
+}
