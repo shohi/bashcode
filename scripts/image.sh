@@ -140,3 +140,13 @@ HEREDOC
     esac
   done
 }
+
+# remove dangling images
+function docker_rmi_dangling() {
+  docker rmi $(docker images -f "dangling=true" -q)
+}
+
+# remove <none> images
+function docker_rmi_none() {
+  docker images | grep "<none>" | awk '{print $3}' | xargs docker rmi -f
+}
