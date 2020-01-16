@@ -150,3 +150,12 @@ function docker_rmi_dangling() {
 function docker_rmi_none() {
   docker images | grep "<none>" | awk '{print $3}' | xargs docker rmi -f
 }
+
+# use docker snippets
+function docker_run_redis() {
+  docker run --rm -it -p 6379:6379 redis redis-server --loglevel verbose
+}
+
+function docker_run_ubuntu() {
+  docker run --rm -it ubuntu:18.04 bash
+}
