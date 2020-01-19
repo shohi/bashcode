@@ -7,6 +7,7 @@
 # NOTE: SHOULD change directory to current folder first, ohterwise
 # scripts can't be found and loaded.
 
+# TODO: aware relative path using $0
 function main() {
   # TODO: refactor, use glob to process all scripts under `scripts` folder.
   local scripts=("file.sh" "dir.sh" "repo.sh" "image.sh" "datetime.sh")
