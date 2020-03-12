@@ -22,7 +22,7 @@ function no_op() {
 }
 
 # create update.sh under given folder which is first argument
-function gen_repo_update_sh() {
+function repo_gen_update_sh() {
   local forced="false"
 
   # parse `-f` options
@@ -121,7 +121,7 @@ HEREDOC
 # check if repos have changes under given folder which is first argument
 # refer-1, https://stackoverflow.com/questions/5143795/how-can-i-check-in-a-bash-script-if-my-local-git-repository-has-changes
 # refer-2, https://stackoverflow.com/questions/25288194/dont-display-pushd-popd-stack-across-several-bash-scripts-quiet-pushd-popd
-function check_repo() {
+function repo_check() {
   if (($# < 1)); then
     err "please specify root dir."
     return
