@@ -121,12 +121,16 @@ HEREDOC
 # refer-1, https://stackoverflow.com/questions/5143795/how-can-i-check-in-a-bash-script-if-my-local-git-repository-has-changes
 # refer-2, https://stackoverflow.com/questions/25288194/dont-display-pushd-popd-stack-across-several-bash-scripts-quiet-pushd-popd
 function repo_check() {
+  local root_dir
   if (($# < 1)); then
-    err "please specify root dir."
-    return 1
+    # err "please specify root dir."
+    # return 1
+    root_dir="."
+  else
+    root_dir=$1
   fi
 
-  local abspath=$(realpath $1)
+  local abspath=$(realpath "${root_dir}")
   if [[ ! -d ${abspath} ]]; then
     err "given path - ${abspath} - is not a dir."
     return 1
