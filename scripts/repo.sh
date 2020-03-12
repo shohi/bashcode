@@ -13,7 +13,6 @@
 # refer, https://google.github.io/styleguide/shell.xml
 function err() {
   echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >&2
-  exit 1
 }
 
 # https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Bourne-Shell-Builtins
@@ -124,13 +123,13 @@ HEREDOC
 function repo_check() {
   if (($# < 1)); then
     err "please specify root dir."
-    return
+    return 1
   fi
 
   local abspath=$(realpath $1)
   if [[ ! -d ${abspath} ]]; then
     err "given path - ${abspath} - is not a dir."
-    return
+    return 1
   fi
 
   local msg
