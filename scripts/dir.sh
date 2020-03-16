@@ -24,7 +24,7 @@ function cd_today() {
 
 # cd to ~/Desktop/daily/[TODAY]
 function cd_dd() {
-  local dd="$HOME/Desktop/$(date '+%Y-%m-%d')"
+  local dd="$HOME/Desktop/daily/$(date '+%Y-%m-%d')"
   mkdir -p "${dd}"
   cd "$dd"
 }
