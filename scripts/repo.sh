@@ -164,8 +164,15 @@ function repo_branch_prune() {
   git fetch -p
 
   if [ $? -ne 0 ]; then
-    exit 1
+    return 1
   fi
 
   git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -D
+}
+
+# output git user info in current directory -- <user>, <email>
+# if current folder is not a git repo, print error.
+function git_user() {
+  # TODO
+  :
 }

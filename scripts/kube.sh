@@ -34,3 +34,23 @@ function kube_rmpo() {
     esac
   done
 }
+
+# dump matched pods' logs to current `logs`.
+# namespace not support yet.
+#
+# Usage: kube_logs $pod_pattern
+function kube_logs() {
+  local ptn=$1
+  local pods
+  if [ -z "$ptn" ]; then
+    pods_line=$(kubectl get pods --output=jsonpath={.items..metadata.name} | grep -v "kubectl")
+    # convert to array
+    # https://stackoverflow.com/questions/9293887/reading-a-delimited-string-into-an-array-in-bash
+    pods=($(echo $pods_line))
+  else
+    pods_line=$(kubectl get pods | grep "$ptn" | awk '{print $1}')
+    pods=($(echo $pods_line))
+  fi
+
+  echo "pods => ${pods[1]}"
+}
