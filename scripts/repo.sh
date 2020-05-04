@@ -172,7 +172,10 @@ function repo_branch_prune() {
 
 # output git user info in current directory -- <user>, <email>
 # if current folder is not a git repo, print error.
-function git_user() {
-  # TODO
-  :
+function repo_git_user() {
+  # TODO: check repo exists
+  local user=$(git config user.name)
+  local email=$(git config user.email)
+
+  echo "${user} ${email}"
 }
