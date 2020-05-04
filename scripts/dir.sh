@@ -29,6 +29,16 @@ function cd_dd() {
   cd "$dd"
 }
 
+# cd to `~/.emacs.d`
+function cd_emacs() {
+  local dd="$HOME/.emacs.d"
+  if [[ -d "${dd}" ]]; then
+    cd "$dd"
+  else
+    echo "no directory found - ${dd}"
+  fi
+}
+
 # handle multiple levels relative path, e.g. "../../a/b/c"
 # NOTE: only consecutive relatives are allowed,
 # paht like "../bc/../de" can't be resolved.
