@@ -173,7 +173,14 @@ function repo_branch_prune() {
 # output git user info in current directory -- <user>, <email>
 # if current folder is not a git repo, print error.
 function repo_git_user() {
-  # TODO: check repo exists
+  # check repo exists
+  # https://stackoverflow.com/questions/617182/how-can-i-suppress-all-output-from-a-command-using-bash
+  git status 2 &>1
+  if [ $? -ne 0 ]; then
+    echo "not a git repo"
+    return 1
+  fi
+
   local user=$(git config user.name)
   local email=$(git config user.email)
 
