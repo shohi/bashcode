@@ -28,6 +28,12 @@ function cd_dd() {
   mkdir -p "${dd}"
   cd "$dd"
 }
+# cd to ~/Desktop/tmp
+function cd_tmp() {
+  local dd="$HOME/Desktop/tmp"
+  mkdir -p "${dd}"
+  cd "$dd"
+}
 
 # cd to `~/.emacs.d`
 function cd_emacs() {
