@@ -35,6 +35,13 @@ function cd_tmp() {
   cd "$dd"
 }
 
+# cd to ~/Desktop
+function cd_d() {
+  local dd="$HOME/Desktop"
+  cd "$dd"
+}
+
+
 # cd to `~/.emacs.d`
 function cd_emacs() {
   local dd="$HOME/.emacs.d"
