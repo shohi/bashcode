@@ -28,6 +28,7 @@ function cd_dd() {
   mkdir -p "${dd}"
   cd "$dd"
 }
+
 # cd to ~/Desktop/tmp
 function cd_tmp() {
   local dd="$HOME/Desktop/tmp"
@@ -41,7 +42,6 @@ function cd_d() {
   cd "$dd"
 }
 
-
 # cd to `~/.emacs.d`
 function cd_emacs() {
   local dd="$HOME/.emacs.d"
@@ -51,6 +51,14 @@ function cd_emacs() {
     echo "no directory found - ${dd}"
   fi
 }
+
+# cd to `~/Desktop/scripts` which mainly contains babashka scripts.
+function cd_bb() {
+  local dd="$HOME/Desktop/scripts"
+  mkdir -p "${dd}"
+  cd "$dd"
+}
+
 
 # handle multiple levels relative path, e.g. "../../a/b/c"
 # NOTE: only consecutive relatives are allowed,
